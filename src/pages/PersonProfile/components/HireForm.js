@@ -1,10 +1,19 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 function HireForm(props) {
-  const [wage, setWage] = useState(0)
+  const [wage, setWage] = useState(0);
+  const { person, setHiredPeople, hiredPeople } = props;
+
+  let navigate = useNavigate();
 
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
+    let newPerson = JSON.parse(JSON.stringify(person));
+    let wageOffer = { wage: wage };
+    Object.assign(newPerson, wageOffer);
+    setHiredPeople([...hiredPeople, newPerson]);
+    navigate("/dashboard", { replace: true });
   }
 
   return (
